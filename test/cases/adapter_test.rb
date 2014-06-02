@@ -9,6 +9,16 @@ class AdapterTest < ActiveSupport::TestCase
     assert_equal ActiveJob::QueueAdapters::InlineAdapter, ActiveJob::Base.queue_adapter
   end
 
+  test 'should load inline threaded adapter' do
+    ActiveJob::Base.queue_adapter = :inline_threaded
+    assert_equal ActiveJob::QueueAdapters::InlineThreadedAdapter, ActiveJob::Base.queue_adapter
+  end
+
+  test 'should load Backburner adapter' do
+    ActiveJob::Base.queue_adapter = :backburner
+    assert_equal ActiveJob::QueueAdapters::BackburnerAdapter, ActiveJob::Base.queue_adapter
+  end
+
   test 'should load Delayed Job adapter' do
     ActiveJob::Base.queue_adapter = :delayed_job
     assert_equal ActiveJob::QueueAdapters::DelayedJobAdapter, ActiveJob::Base.queue_adapter
@@ -42,10 +52,5 @@ class AdapterTest < ActiveSupport::TestCase
   test 'should load Sneakers adapter' do
     ActiveJob::Base.queue_adapter = :sneakers
     assert_equal ActiveJob::QueueAdapters::SneakersAdapter, ActiveJob::Base.queue_adapter
-  end
-
-  test 'should load Backburner adapter' do
-    ActiveJob::Base.queue_adapter = :backburner
-    assert_equal ActiveJob::QueueAdapters::BackburnerAdapter, ActiveJob::Base.queue_adapter
   end
 end
